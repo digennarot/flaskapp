@@ -1,0 +1,5 @@
+---
+  # Main entry: runs setup and deploy task
+
+- include: deploy.yml
+  tags: [flaskapp-deploy]

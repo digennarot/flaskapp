@@ -1,0 +1,8 @@
+---
+
+- name: flaskapp
+  hosts: all
+  remote_user: root
+  become: yes
+  roles:
+    - role: ./

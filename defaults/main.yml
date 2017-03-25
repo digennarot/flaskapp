@@ -1,0 +1,42 @@
+# The name of the application, uses to create application directory, e.g.
+# should be a shorthand, lowercase and not contain any whitespaces.
+flaskapp_app_name: hasher
+
+# Port for the application
+flaskapp_port: 5000
+
+# The path to application requirements.
+flaskapp_app_requirements: "{{ flaskapp_app_directory }}/requirements.txt"
+
+# The remote git repository to pull application code from, for example:
+flaskapp_app_repository: gitlab@repo.simscale.com:tchaudhry/unstable-hasher-external.git
+
+# The version of the repository to checkout. This can be a full
+# 40-character SHA1 hash, the branch or a tag name.
+flaskapp_app_version: master
+
+# The list of environment variables uses to run most of commands.
+flaskapp_app_environment:
+  PATH: "{{ flaskapp_app_directory }}/bin:{{ ansible_env.PATH }}"
+
+# The list of custom commands to run before and after deploy. These commands
+# uses previously defined environment to run.
+flaskapp_app_pre_hooks: []
+flaskapp_app_post_hooks: []
+
+# The path to application config to use when launch application.
+flaskapp_app_config:
+
+# The Python version which should be installed
+flaskapp_python_version: 2.7
+
+# The list of system packages required to build/run application.
+flaskapp_app_packages:
+  - git
+  - python{{ flaskapp_python_version }}
+  - build-essential
+  - python-dev
+  - python-pip
+  - python-virtualenv
+  - libpq-dev
+  - build-essential

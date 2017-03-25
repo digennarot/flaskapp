@@ -1,0 +1,31 @@
+---
+  # Deploy the application
+
+- name: Run pre hooks
+  command: "{{ item }} chdir={{ flaskapp_app_directory }}"
+  with_items: flaskapp_app_pre_hooks
+  environment: flaskapp_app_environment
+  tags:
+    - hook
+
+- name: Checkout the latest source code
+  git: repo={{ app_repository }} dest={{ app_directory }}
+    version={{ flaskapp_app_version }} accept_hostkey=true
+    force=yes
+  when: app_repository is defined and app_repository
+
+- stat: path={{ flaskapp_app_config }}
+  delegate_to: localhost
+  sudo: false
+  register: flaskapp_app_config_file
+  when: flaskapp_app_config is defined and flaskapp_app_config
+
+- name: Login into my docker.io
+  docker_login: 
+
+- name: Build an image and push it to a private repo
+  docker_image:
+    path: ./hasher
+    name: registry.ansible.com/digennarot/hasher
+    tag: v1
+    push: yes
